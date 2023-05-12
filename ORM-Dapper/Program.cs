@@ -31,9 +31,31 @@ namespace ORM_Dapper
             }
             // END GET
 
-            // INSERT Deparment
+            // INSERT Department
             Console.Write("Type a new department name: ");
             var newDepartment = Console.ReadLine();
+            departmentRepo.InsertDepartment(newDepartment);
+            // END INSERT
+
+            foreach (var department in departments)
+            {
+                Console.WriteLine(department.Name);
+            }
+
+            // GET Departments
+            departments = departmentRepo.GetAllDepartments();
+
+            foreach (var department in departments)
+            {
+                Console.WriteLine(department.DepartmentID);
+                Console.WriteLine(department.Name);
+                Console.WriteLine();
+            }
+            // END GET
+
+            // INSERT Department
+            Console.Write("Type a new department name: ");
+            newDepartment = Console.ReadLine();
             departmentRepo.InsertDepartment(newDepartment);
             // END INSERT
 
