@@ -19,12 +19,32 @@ namespace ORM_Dapper
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return _conn.Query<Product>("SELECT * FROM products");
+            return _conn.Query<Product>("SELECT * FROM products;");
         }
 
-        public void InsertProduct(string name)
+        public Product GetAllProducts(int id)
         {
-            _conn.Execute("INSERT INTO products (name) VALUES (@name)", new { name = name });
+            return _conn.QuerySingle<Product>("SELECT * FROM products WHERE ProductID = @id;", new { id = id });
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            _conn.Execute("UPDATE products" +
+                            " SET Name = @name," +
+                            " Price = @price," +
+                            " CategoryID = @categoryid," +
+                            " OnSale = @onsale," +
+                            " StockLevel = @stocklevel" +
+                            " WHERE ProductID = @id;",
+                            new
+                            {
+                                id = product.ProductID,
+                                name = product.Name,
+                                price = product.Price,
+                                categoryid = product.CategoryID,
+                                onsale = product.OnSale,
+                                stocklevel = product.StockLevel
+                            });
         }
     }
 }
